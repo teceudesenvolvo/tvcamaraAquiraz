@@ -1,0 +1,18 @@
+<<<<<<< HEAD
+version: "1"
+
+services: 
+    app:
+        build: .
+        ports: 
+            - "3000:3000"
+=======
+version: "1"
+
+services: 
+    app:
+        build: .
+        ports: 
+            - "3000:3000"
+>>>>>>> 35e75b1a24c6fa74665bd3793c80f1d4326e7abc
+        command: npm start
