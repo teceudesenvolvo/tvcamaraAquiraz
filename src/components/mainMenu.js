@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 
 import firebase from 'firebase'
 
-import {FaSearch, FaBell, FaUserCircle} from 'react-icons/fa'
+import { FaUserCircle} from 'react-icons/fa'
 
 
 // ITEMS MENU
@@ -97,8 +97,6 @@ class MainMenu extends React.Component {
             {/* <FaSearch className="search-icon"/>
             <a href="/buscar" className="left-menu-item">Buscar</a> */}
 
-
-            <FaBell className="notification"/>
           </div>
           <div className="profile-items" >
             {/* <img className="profile-icon" onClick={goProfile} src={profile} /> */}
