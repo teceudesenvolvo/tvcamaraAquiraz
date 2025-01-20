@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 // import {connect} from 'react-redux'
 
-import bg101 from '../../assets/images/BANNER.png'
 import '../../App.css'
 
 //Icones
@@ -39,7 +38,6 @@ class Dashboard extends Component{
     <div className="backgroundHero heroPg">
       
     <p>
-      <img className="backgroundHero heroPg" alt='BgAdmin' src={bg101}/>
     </p>
     
         </div>
