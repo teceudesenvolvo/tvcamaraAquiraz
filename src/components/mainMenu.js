@@ -11,7 +11,7 @@ import {FaSearch, FaBell, FaUserCircle} from 'react-icons/fa'
 
 
 // ITEMS MENU
-import logo from '../assets/images/logo-SGA.png'
+import logo from '../assets/images/logoAquiraz.png'
 // import logo from '../assets/images/EUDESENVOLVO-10.png'
 // import profile from '../assets/images/profile.png'
 

@@ -6,7 +6,6 @@ import {bindActionCreators} from 'redux'
 
 import '../../App.css'
 
-
 import firebase from 'firebase'
 import firebaseConfig from '../firebaseConfig'
 
