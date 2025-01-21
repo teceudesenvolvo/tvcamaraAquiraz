@@ -71,7 +71,12 @@ class Liveatual extends React.Component {
       <div>
         <section>
           <div className="backgroundLaunch">
+            <div className="divTitleSection divTitleSectionLive">
+              <h1 className='titleSection titleLive'>Tv Câmara Aquiraz</h1>
+              <p className="newsSection msgLive">Estamos ao vivo</p>
+            </div>
             <div className="curso-lancamento">
+              
               <div className='videoLiveInicio'>
                 {liveStreamId ? (
                   <ReactPlayer
