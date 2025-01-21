@@ -75,9 +75,9 @@ import axios from 'axios'
   
     return (
     <div>
-        <section className="courses">
+        <section className="courses recentesList">
           <div className="divTitleSection">
-            <h1 className="titleSection">Recentes</h1>
+            <h1 className="titleSection recentesList">Recentes</h1>
             <p className="newsSection">Eventos e sessões mais recentes</p>
           </div>
             <ul  className="listAreas2">

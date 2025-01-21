@@ -85,7 +85,7 @@ import axios from 'axios'
   
     return (
     <div>
-        <section className="courses">
+        <section className="eventos">
           <div className="divTitleSection">
             {/* <div className="item-separator"></div> */}
             <h1 className="titleSection">Eventos</h1>

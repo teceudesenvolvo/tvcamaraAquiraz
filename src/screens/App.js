@@ -6,7 +6,8 @@ import {Switch, Route} from 'react-router-dom'
 // Firebase
 // import firebaseConfig from './firebaseConfig'
 
-//Logomarca
+//Imagens
+import Tarja from '../assets/images/tarja-aquiraz.png'
 
 //Início
 import Inicio from '../screens/Inicio'
@@ -75,7 +76,7 @@ function App() {
       
       <footer className="footer">
         <div className="footer-logo">
-          {/* <img src={Logo} className="logoFooter"/> */}
+          <img src={Tarja} className="logoFooter"/>
           <p> <a href="https://eudesenvolvo.com/govtech" >e | Videos</a> &copy; 2020 - {moment().format('YYYY')} </p>
         </div>
       </footer>

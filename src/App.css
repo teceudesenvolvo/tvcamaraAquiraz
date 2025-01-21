@@ -1,5 +1,5 @@
 body{
-  background-color: #1f1f1f;
+  background-color: #dadada;
   overflow-x: hidden;
   width: 100%;
 }
@@ -21,7 +21,7 @@ body > iframe{
 
 .App {
   text-align: center;
-  color: #fff;
+  color: #1f1f1f;
   margin-top: -21px;
   padding: 10px;
   font-size: 8px;
@@ -87,7 +87,7 @@ body > iframe{
   align-items: center;
   z-index: 10;
   color: white;
-  background-color: #353535;
+  background-color: #00351e;
 }
 .logo-menu{
   max-height: 90px;
@@ -495,9 +495,18 @@ body > iframe{
 /* ----------------------------------- Cursos ------------------------------------------------ */
 .courses{
   width: 100%;
-  margin: 50px auto;
+  margin: 250px auto 50px auto;
   margin-left: -3%;
 }
+.eventos{
+  width: 100%;
+  margin-left: -3%;
+}
+.mensagem{
+  width: 100%;
+  margin-left: -3%;
+}
+
 .course-featured{
   width: 80%;
   display: inline-flex;
@@ -1012,7 +1021,7 @@ body > iframe{
   align-items: center;
 }
 .Areas{
-  margin: 10px;
+  margin: 20px 10px;
   background-color: transparent;
   color: #000;
   font-size: 8px !important;
@@ -1046,7 +1055,7 @@ body > iframe{
   object-fit: cover;
 }
 .Areas > p{
-  color: #fff;
+  color: #1f1f1f;
   margin-top: 10px;
   opacity: 1;
   z-index: 1;
@@ -2456,7 +2465,7 @@ body > iframe{
 /* Rodapé -------------------------------------------------------------------------------*/
 .footerSection{
   width: 30px;
-  background-color: #000;
+  background-color: #003529;
   height: 50px;
   width: 100%;
   margin: 0 auto;
@@ -2470,17 +2479,19 @@ body > iframe{
 .footer-logo{
   margin-top: -100px;
   width: 30px;
-  background-color: #000;
-  height: 50px;
+  background-color: #003529;
+  height: 120px;
   width: 100%;
   margin-bottom: -20px;
   margin-left: -10px;
   padding-top: 5px;
 }
 .logoFooter{
-  margin-top: 15px;
+  margin-top: -53px;
   margin-bottom: -15px;
-  width: 60px;
+  margin-left: 50%;
+  width: 360px;
+  height: 150px;
 }
 .logoFooter-City{
   width: 200px;
@@ -2491,16 +2502,16 @@ body > iframe{
   margin-top: 50px;
 }
 .footer{
-  background-color: #000;
+  background-color: #003529;
   flex: 1;
   width: 103%;
   margin-top: 200px;
   margin-left: -10px;
   font-size: 13px;
-  color: #a7a7a7;
+  color: #fff;
 }
 footer > div > p > a {
-  color: #ff5000;
+  color: #fa7a3e;
 }
 
 /* Mobile  ----------------------------------------------------------------------- */
