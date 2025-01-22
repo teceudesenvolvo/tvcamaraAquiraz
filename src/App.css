@@ -643,7 +643,7 @@ body > iframe{
 }
 .divTitleSection{
   margin-left: 90px;
-  margin-top: 90px;
+  margin-top: 120px;
   display: inline-flex;
   width: 100%;
   align-items: flex-start;
@@ -670,6 +670,25 @@ body > iframe{
   margin-top: 10px !important;
   margin-left: -150px !important;
 }
+.circleLive{
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  margin-left: -130px;
+  margin-top: 16px;
+  border-radius: 50%;
+  animation-name: recorder;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  border: 1px solid red;
+}
+
+@keyframes recorder {
+  0% {background-color: red;}
+  50% {background-color: transparent;}
+  100% {background-color: red;}
+}
+
 .titleSection > img {
   margin-right: 15px;
   margin-bottom: -10px;

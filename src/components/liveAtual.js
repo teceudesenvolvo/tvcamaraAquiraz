@@ -74,6 +74,7 @@ class Liveatual extends React.Component {
             <div className="divTitleSection divTitleSectionLive">
               <h1 className='titleSection titleLive'>Tv Câmara Aquiraz</h1>
               <p className="newsSection msgLive">Estamos ao vivo</p>
+              <div className='circleLive'></div>
             </div>
             <div className="curso-lancamento">
               
