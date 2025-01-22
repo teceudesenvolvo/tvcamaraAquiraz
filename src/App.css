@@ -1472,7 +1472,7 @@ body > iframe{
 
 /* Manager Inputs */
 .input-login{
-  width: 80%;
+  width: 350px;
   margin-top: 5px;
   margin-bottom: 5px;
   height: 30px;
@@ -1522,7 +1522,7 @@ body > iframe{
   width: 85%;
 }
 .loginBox{
-  width: 40% !important;
+  width: 60% !important;
   height: 455px;
   flex: 1;
   width: 85%;
@@ -2024,7 +2024,6 @@ body > iframe{
   width: 53%;
   font-weight: 600;
   text-align: left;
-  margin-left: 23%;
   margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 1px solid #bababa;
@@ -2721,7 +2720,7 @@ footer > div > p > a {
     margin-top: 180px;
   }
   .input-login{
-    width: 80%;
+    width: 255px;
     margin-left: -70px;
   }
   .title-modify{
