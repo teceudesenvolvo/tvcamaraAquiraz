@@ -1472,7 +1472,7 @@ body > iframe{
 
 /* Manager Inputs */
 .input-login{
-  width: 50%;
+  width: 80%;
   margin-top: 5px;
   margin-bottom: 5px;
   height: 30px;
@@ -2548,7 +2548,7 @@ footer > div > p > a {
     margin-left: 17%;
   }
   .left-menu{
-    
+
     display: none;
   }
   .Areas:hover{
