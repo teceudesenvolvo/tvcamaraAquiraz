@@ -2907,8 +2907,7 @@ footer > div > p > a {
   }
   .footer-logo {
     height: 120px;
-    width: 76%;
-    margin-left: 30px;
+    width: 100%;
   }
   .loginBox{
     width: 95% !important;
