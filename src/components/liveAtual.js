@@ -24,12 +24,12 @@ class Liveatual extends React.Component {
       const response = await axios.post(
         'https://oauth2.googleapis.com/token',
         {
-          client_id: '690193859816-ptc7jnica28b58eh4p42gbrureu2pu13.apps.googleusercontent.com',
-          client_secret: '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',
-          refresh_token: '1//0h6AWsI4hand9CgYIARAAGBESNwF-L9Ir-sdZiTTIvgpY5A3OQ2vv0x_WEPm4KrZKlLU6X1Qu9UE1PkLEfTm-OKZGdsc-NBEB4hE',
+          client_id: '690193859816-clfb1alj3telks2pn44cpgrcte4unt79.apps.googleusercontent.com',
+          client_secret: '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',
+          refresh_token: '1//0hGQmkhgnpw65CgYIARAAGBESNwF-L9IrwfwjVYJddwl3Cl8-naCqEE79Yhj0XQusqSC1Et7FzTvENKvcz2yPh-Kn8EHs5SioyGI',
           grant_type: 'refresh_token',
           scope: 'https://www.googleapis.com/auth/youtube.readonly',
-          redirect_uri: 'https://tvcamara.cmsga.ce.gov.br/'
+          redirect_uri: 'https://tvcamara.cmaquiraz.ce.gov.br/'
         }
       );
       const accessToken = response.data.access_token;
@@ -42,7 +42,7 @@ class Liveatual extends React.Component {
 
   fetchLiveStreams = (accessToken) => {
     const API_KEY = 'AIzaSyAvzOdQzU-H_tneJBcbVnmO60dEzWMKhT4';
-    const PLAYLIST_ID = 'PL7WfCTsmLg2UT33p84KHmPjsc3pGd3gPU';
+    const PLAYLIST_ID = 'PLTrq6afnTQmGtNTPcf5fidnO6wF4ZtSgU';
 
     axios.get('').then(response => {
       console.log(response); // Verificar os dados da resposta da API
@@ -71,11 +71,7 @@ class Liveatual extends React.Component {
       <div>
         <section>
           <div className="backgroundLaunch">
-            <div className="divTitleSection divTitleSectionLive">
-              <h1 className='titleSection titleLive'>Tv Câmara Aquiraz</h1>
-              <p className="newsSection msgLive">Estamos ao vivo</p>
-              <div className='circleLive'></div>
-            </div>
+            
             <div className="curso-lancamento">
               
               <div className='videoLiveInicio'>
