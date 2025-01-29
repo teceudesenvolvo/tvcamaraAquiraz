@@ -420,7 +420,7 @@ body > iframe{
 .videoLiveInicio>div>div>iframe{
   width: 100%;
   height: 90%;
-  margin-top: 15px;
+  margin-top: 55px;
 }
 
 
@@ -640,6 +640,10 @@ body > iframe{
 }
 .sectionColor > h1{
   color: white;
+}
+.divTitleSectionLive{
+  margin-top: 220px !important;
+  margin-bottom: -90px !important;
 }
 .divTitleSection{
   margin-left: 90px;
