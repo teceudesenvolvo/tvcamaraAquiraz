@@ -47,7 +47,7 @@ import axios from 'axios'
                         id: key
                     })
                 }
-                  avisos = avisos.filter(content => content.snippet.title.toUpperCase().includes('PALAVRA'))
+                  avisos = avisos.filter(content => content.snippet.title.toUpperCase().includes('SOLENE'))
                   
                   if(avisoAll.length > 4){
                     avisoAll.length = 4;
@@ -89,8 +89,8 @@ import axios from 'axios'
         <section className="eventos">
           <div className="divTitleSection">
             {/* <div className="item-separator"></div> */}
-            <h1 className="titleSection">Para você</h1>
-            <p className="newsSection">Nossos Representantes</p>
+            <h1 className="titleSection">Eventos</h1>
+            <p className="newsSection">Eventos Recentes da Câmara</p>
           </div>
             <ul  className="listAreas2">
               {listAvisos}
