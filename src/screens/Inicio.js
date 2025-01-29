@@ -16,8 +16,7 @@ import bgSite from '../assets/images/capa.png'
 import MainMenu from '../components/mainMenu'
 import Sessoes from '../components/sections'
 import LiveAtual from '../components/liveAtual'
-// import Lancamentos from '../components/launch'
-// import Event from '../components/eventos'
+import Lancamentos from '../components/launch'
 import Reunioes from '../components/reunioes'
 
 
@@ -119,6 +118,13 @@ import Reunioes from '../components/reunioes'
                 /></p>
           </div>
         </div> */}
+         <div className="divTitleSection divTitleSectionLive">
+          <h1 className='titleSection titleLive'>Tv Câmara Aquiraz</h1>
+          <p className="newsSection msgLive">Estamos ao vivo</p>
+          <div className='circleLive'></div>
+        </div>
+
+
         {/* <Lancamentos/> */}
       
         
