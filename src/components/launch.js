@@ -73,7 +73,7 @@ class Lançamento extends React.Component {
               </p>
               <div className='videoLiveInicio'>
                 <ReactPlayer className="watchVideo" scrolling="no" frameborder="0" onload="iFrameResize()"
-                  url={`https://youtu.be/Hi3vL5Gw2zY`} controls='true' />
+                  url={`https://stream3.camara.gov.br/tv1/manifest.m3u8`} controls='true' />
               </div>
             </div>
           </div>
