@@ -124,9 +124,7 @@ import Reunioes from '../components/reunioes'
           <div className='circleLive'></div>
         </div>
 
-
-        {/* <Lancamentos/> */}
-      
+        {/* <Lancamentos/> */}   
         
         <LiveAtual/>
 
