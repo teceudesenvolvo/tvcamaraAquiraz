@@ -428,7 +428,7 @@ body > iframe{
   text-align: left;
   position: relative;
   left: 31px;
-  top: 10px;
+  top: 60px;
   width: 95%;
   margin: 10px;
 }
@@ -2641,8 +2641,8 @@ footer > div > p > a {
   .watchVideo{
     width: 100% !important;
     height: 200px !important;
-    margin-left: -50px;
-    margin-top: -40px;
+    margin-left: 0px;
+    margin-top: 40px;
   }
   .title-curso-lancamento{
     display: block;
