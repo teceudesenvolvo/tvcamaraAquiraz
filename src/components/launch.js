@@ -72,7 +72,7 @@ class Lançamento extends React.Component {
                     /> */}
               </p>
               <div className='videoLiveInicio'>
-              <div id="jmvplayer--pseudo_pip"><iframe src="https://player.jmvstream.com/avj/3O5rWk1QW1397554JXAlT01F6eALv2" allowfullscreen allow="fullscreen;" frameborder="0" width="100%" height="760"></iframe></div>
+              <div id="jmvplayer--pseudo_pip"><iframe src="https://player.jmvstream.com/avj/3O5rWk1QW1397554JXAlT01F6eALv2" allowfullscreen allow="fullscreen;" frameborder="0"  width="100%" height="100%"></iframe></div>
                 
                 {/* <ReactPlayer className="watchVideo" scrolling="no" frameborder="0" onload="iFrameResize()"
                   url={`https://player.jmvstream.com/avj/3O5rWk1QW1397554JXAlT01F6eALv2`} controls='true' /> */}

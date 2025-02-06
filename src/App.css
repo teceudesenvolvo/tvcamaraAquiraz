@@ -432,6 +432,12 @@ body > iframe{
   width: 95%;
   margin: 10px;
 }
+
+#jmvplayer--pseudo_pip{
+  width: 100%;
+  height: 700px;
+}
+
 .title-curso-lancamento{
   font-family: Open Sans, sans-serif;
   font-size: 30px;
@@ -2585,6 +2591,12 @@ footer > div > p > a {
   .curso-lancamento{
     top: 25px;
   }
+  #jmvplayer--pseudo_pip{
+    margin-top: 30px;
+    width: 80%;
+    height: 270px;
+  }
+
   .titleLive{
     margin-left: -10px;
   }
@@ -2644,6 +2656,8 @@ footer > div > p > a {
     margin-left: 0px;
     margin-top: 40px;
   }
+
+
   .title-curso-lancamento{
     display: block;
   }
