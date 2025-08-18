@@ -77,7 +77,7 @@ function App() {
       <footer className="footer">
         <div className="footer-logo">
           <img src={Tarja} className="logoFooter"/>
-          <p> <a href="https://eudesenvolvo.com/govtech" >e | Videos</a> &copy; 2020 - {moment().format('YYYY')} </p>
+          <p> <a href="https://" >Blu Tecnologias</a> &copy; 2020 - {moment().format('YYYY')} </p>
         </div>
       </footer>
     </div>
