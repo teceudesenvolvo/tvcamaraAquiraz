@@ -36,30 +36,30 @@ import axios from 'axios'
     }
 
     loadAvisos = async () => {
-      await axios.get(``)
-              .catch(err => console.log(err))
-              .then(res => {
-                  const avisoAll = res.data.items
-                  let avisos = []
-                  for(let key in avisoAll){
-                    avisos.push({
-                        ...avisoAll[key],
-                        id: key
-                    })
-                }
-                  avisos = avisos.filter(content => content.snippet.title.toUpperCase().includes('SOLENE'))
-                  
-                  if(avisoAll.length > 4){
-                    avisoAll.length = 4;
-                    this.setState({avisos: avisos})
-                  }
-                  console.log('1')
-              })
+      try {
+        const res = await axios.get(``);
+        const avisoAll = res.data.items || [];
+        
+        let avisos = avisoAll.map(item => ({
+          ...item,
+          id: item.etag // Using a unique identifier from the item itself, like etag, or another unique property.
+        }));
+
+        avisos = avisos.filter(content => content.snippet.title.toUpperCase().includes('SOLENE'));
+
+        // Limita avisos a 4 itens
+        if (avisos.length > 4) {
+          avisos = avisos.slice(0, 4);
+        }
+        this.setState({ avisos });
+        console.log('1');
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     componentDidMount() {
-      const loadPage  = () => console.log(this.loadAvisos())
-      loadPage()
+      this.loadAvisos();
     }
   
   render(){

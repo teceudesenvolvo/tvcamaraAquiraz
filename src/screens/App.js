@@ -76,7 +76,7 @@ function App() {
       
       <footer className="footer">
         <div className="footer-logo">
-          <img src={Tarja} className="logoFooter"/>
+          <img alt='Logo Blu Tecnologias' src={Tarja} className="logoFooter"/>
           <p> <a href="https://" >Blu Tecnologias</a> &copy; {moment().format('YYYY')} </p>
         </div>
       </footer>

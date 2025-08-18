@@ -41,41 +41,40 @@ import {FaPlayCircle} from 'react-icons/fa'
     loadAvisos = async () => {
 
       // Colocar o title nos quadros
-      if(this.props.id){
-        await axios.get(`/courses/${this.props.id}.json`)
-                      .catch(err => console.log(err))
-                      .then(res => {
-                        this.setState({
-                          titleCourse: res.data.title,
-                        })
-                        this.props.clickButton(this.state)
-                      })
+      if (this.props.id) {
+        try {
+          const res = await axios.get(`/courses/${this.props.id}.json`);
+          this.setState({
+            titleCourse: res.data.title,
+          });
+          this.props.clickButton(this.state);
+        } catch (err) {
+          console.log(err);
+        }
       }
 
       // Lista de itens
-      await axios.get(`/class.json`)
-              .catch(err => console.log(err))
-              .then(res => {
-                  const aulaAll = res.data
-                  let aulas = []
-                  for(let key in aulaAll){
-                      aulas.push({
-                          ...aulaAll[key],
-                          id: key
-                      })
-                  }
-                  
-                  // consultas
-                  if(this.state.idCourse){
-                    aulas = aulas.filter(aula => {
-                        return (
-                          aula.idCourse === this.state.idCourse
-                        )
-                    })
-                  }
-                  this.setState({aulas: aulas})              
-              })
-    }
+      try {
+        const res = await axios.get(`/class.json`);
+        const aulaAll = res.data || [];
+
+        // Using Object.values() to iterate over the items
+        let aulas = Object.values(aulaAll).map((item, index) => ({
+          ...item,
+          id: item.id || index.toString()
+        }));
+
+        // consultas
+        if (this.state.idCourse) {
+          aulas = aulas.filter(aula => {
+            return aula.idCourse === this.state.idCourse;
+          });
+        }
+        this.setState({ aulas: aulas });
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
     componentDidMount() {
       const loadPage  = () => this.loadAvisos()

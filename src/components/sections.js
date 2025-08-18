@@ -38,23 +38,30 @@ import axios from 'axios';
     }
 
     loadAvisos = async () => {
-      await axios.get(``)
-              .catch(err => console.log(err))
-              .then(res => {
-                const avisoAll = res.data.items
-                let avisos = []
-                for(let key in avisoAll){
-                    avisos.push({
-                        ...avisoAll[key],
-                        id: key
-                    })
-                }
-                  avisos = avisos.filter(content => content.snippet.title.toUpperCase().includes('SESSÃO'))
-                  if(avisos.length > 4){
-                    avisos.length = 12;
-                  }
-                  this.setState({avisos: avisos})
-              })
+      try {
+        const res = await axios.get(``);
+        const avisoAll = res.data.items || [];
+        
+        let avisos = avisoAll.map((item, index) => ({
+          ...item,
+          id: index.toString() // Or use a unique ID from the item itself if available
+        }));
+
+        avisos = avisos.filter(content => content.snippet.title.toUpperCase().includes('SESSÃO'));
+        
+        // Limita avisos a 12 itens se o original for maior que 4
+        // A lógica avisos.length = 12; is a bit unusual. 
+        // It's more common to use .slice() or a conditional check.
+        // I've kept a similar but safer logic here.
+        if (avisos.length > 4) {
+          avisos = avisos.slice(0, 12);
+        }
+        
+        this.setState({avisos: avisos});
+
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     componentDidMount() {

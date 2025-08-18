@@ -46,37 +46,25 @@ class ListItem extends Component{
   }
 
   loadAvisos = async () => {
-    // await axios.get(`/sessoes.json`)
-    // await axios.get(`/class.json`)
-    await axios.get(``)
-            .catch(err => console.log(err))
-            .then(res => {
-                const avisoAll = res.data.items
-                let avisos = []
-                for(let key in avisoAll){
-                    avisos.push({
-                        ...avisoAll[key],
-                        id: key
-                    })
-                }
-             
-                // if(avisos.length > 4){
-                //   avisos.reverse()
-                //   avisos.length = 12;
-                // }
-
-                
-                
-                avisos = avisos.filter(content => content.snippet.title.toUpperCase().includes(this.state.searchCourse.toUpperCase()))
-                this.setState({avisos: avisos})
-                console.log({avisos: avisos})             
-
-               
-
-               
-
-            })
-  }
+      try {
+        const res = await axios.get(``);
+        const avisoAll = res.data.items || [];
+        
+        let avisos = Object.values(avisoAll).map((item, index) => ({
+          ...item,
+          id: item.id || index.toString() // Use a unique ID from the item or the index
+        }));
+        
+        avisos = avisos.filter(content => 
+          content.snippet.title.toUpperCase().includes(this.state.searchCourse.toUpperCase())
+        );
+        
+        this.setState({ avisos: avisos });
+        console.log({ avisos: avisos });
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
  // pesquisar aula
   

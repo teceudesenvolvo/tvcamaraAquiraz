@@ -10,9 +10,6 @@ import firebase from 'firebase'
 import firebaseConfig from '../firebaseConfig'
 
 //Icones
-function goHome(){
-  window.location.href = "/"
-}
 
 // const onKeyDown = (event) => {
 //   if(event.key === 'Enter'){

@@ -40,40 +40,26 @@ import {FaPlayCircle} from 'react-icons/fa'
     }
 
     loadAvisos = async () => {
-      // Lista de itens
-      await axios.get(``)
-              .catch(err => console.log(err))
-              .then(res => {
-                  const aulaAll = res.data.items
-                  let aulas = []
-                  for(let key in aulaAll){
-                      aulas.push({
-                          ...aulaAll[key],
-                          id: key
-                      })
-                  }
+      try {
+        const res = await axios.get(``);
+        const aulaAll = res.data.items || [];
+        
+        let aulas = aulaAll.map((item, index) => ({
+          ...item,
+          id: index.toString() // Or use a unique ID from the item itself if available
+        }));
 
+        // The logic aulas.length = 6; is a bit unusual. 
+        // A safer way is to use .slice()
+        if (aulas.length > 4) {
+          aulas = aulas.slice(0, 6);
+        }
+        
+        this.setState({aulas: aulas});
 
-                  // console.log('aula: ' + this.props.idAula)
-                  // console.log('curso: ' +this.props.idCourse)
-
-                  // consultas
-                  // aulas = aulas.filter(aula => {
-                  //     return (
-                  //       aula.idCourse === this.props.idAula
-                  //     )
-                  // })
-
-                  
-                  // aulas = aulas.filter(aula => aula.idCourse === this.props.id)
-
-                  
-                  if(aulas.length > 4){
-                    aulas.length = 6;
-                    this.setState({aulas: aulas})
-                  }
-                  
-              })
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     componentDidMount() {
