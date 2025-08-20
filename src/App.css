@@ -531,13 +531,12 @@ body>iframe {
 
 .player-content-info h1 {
   font-size: 3em;
-  margin: 0 0 10px;
+  margin-bottom: 30px;
 }
 
 .player-content-info p {
-  font-size: 1.2em;
+  font-size: 15px;
   line-height: 1.5;
-  margin: 0 0 20px;
 }
 
 .btn-player {
