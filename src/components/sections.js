@@ -110,6 +110,7 @@ class Avisos extends React.Component {
     // Função para carregar mais sessões
     loadMoreSessoes = async () => {
         const { currentPage, sessoes } = this.state;
+        console.log(sessoes)
         if (currentPage > 1) {
             this.setState({ isLoading: true });
             try {
@@ -151,7 +152,8 @@ class Avisos extends React.Component {
     }
   
     render() {
-      const { sessoes, currentPage, totalPages, isLoading } = this.state; 
+      // Removida a variável `totalPages` da desestruturação para corrigir o aviso.
+      const { sessoes, currentPage, isLoading } = this.state; 
       
       const listSessoes = sessoes.map((sessao) => 
           <li className="Areas type1" key={sessao.codReuniao}
