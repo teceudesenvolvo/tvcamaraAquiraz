@@ -5,27 +5,10 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 
 // Componetes
-import ClassPlayer from '../../components/classPlayer'
+import Sessoes from '../../components/sections'
 import MainMenu from '../../components/mainMenu'
 
-
-
-
 import '../../App.css'
-
-
-
-// function onClickHandler(){
-//     // const data = new FormData() 
-//     // data.append('file', this.state.selectedFile)
-//     console.log('Botão funciona')
-//     console.log(this.state.id)
-
-// }
-
-// function goFilter(){
-//     window.location.href = "/listItems"
-//   }
 
 class Gestao extends Component {
   constructor(props) {
@@ -41,54 +24,97 @@ class Gestao extends Component {
       teacher: 'Professor',
       uriVideo: ``,
       avisos: '',
-      videos: ''
+      videos: '',
+      materias: [],
     }
   }
 
 
   loadAula = async () => {
-    axios.get(``)
-      .catch(err => console.log(err))
-      .then(res => {
-        const videoAll = res.data.items
+    // Pega o codReuniao do localStorage
+    const codReuniao = localStorage.getItem('codReuniao');
+    const idYoutube = localStorage.getItem('idYoutube');
 
-        const videos = videoAll.filter(content => content.contentDetails.videoId.includes(this.props.idAula))
-        console.log(videos)
+    if (codReuniao) {
+      try {
+        // Faz a requisição para a API do SAPL com o codReuniao específico
+        const res = await axios.get(`https://sapl.aquiraz.ce.leg.br/api/sessao-plenaria/${codReuniao}/`);
+        
+        // Pega os dados da reunião
+        const sessao = res.data;
+        
+        // Separa as matérias por vírgula e remove espaços em branco
+        const materias = sessao.txtObjeto ? sessao.txtObjeto.split(',').map(m => m.trim()) : [];
+
+        // Atualiza o estado com as informações da API
         this.setState({
-          videos: videos,
-          title: videos[0].snippet.title,
-          description: videos[0].snippet.description,
-          dataPublic: videos[0].snippet.publishedAt,
+          title: sessao.txtTituloReuniao || 'Reunião Plenária',
+          tipo: sessao.txtTipoReuniao || 'Tipo não especificado',
+          teacher: sessao.txtPresidente || 'Presidente não especificado',
+          materias: materias,
+          description: sessao.txtApelido || '',
+          dataPublic: sessao.datInicio || '',
+          uriVideo: idYoutube,
+          data: sessao.datReuniaoString || '',
+        });
 
-        })
-      })
-
+      } catch (err) {
+        console.error("Erro ao carregar os dados da reunião:", err);
+        // Em caso de erro, defina um estado padrão
+        this.setState({
+          title: 'Título não encontrado',
+          description: 'Não foi possível carregar a descrição da reunião.',
+          materias: [],
+        });
+      }
+    }
   }
 
   componentDidMount() {
-    const loadPage = () => this.loadAula()
-    loadPage()
+    this.loadAula();
   }
 
-
-
+  
   render() {
+    const { materias } = this.state;
+    
     return (
       <div className="App">
         <MainMenu />
-        <div className='box-video-aula'>
+        <div className='box-video-aula' style={{ width: '80%', margin: '0 auto' }}>
           <div className='video-play'>
-            <ReactPlayer className="playVideoWatch" scrolling="no" frameborder="0" onload="iFrameResize()"
-              url={`www.youtube.com/watch?v=${this.props.idAula}`} controls='true' />
+            <ReactPlayer 
+              className="playVideoWatch" 
+              scrolling="no" 
+              frameBorder="0" 
+              onLoad="iFrameResize()"
+              url={this.state.uriVideo} 
+              controls={true}
+              width="100%"
+              height="100%"
+            />
           </div>
           <div className='desc-video' >
             <h1>{this.state.title}</h1>
             <p>{this.state.description}</p>
-            {/* <p>Transmitido em {moment(this.state.dataPublic).utc().format('DD  MM YYYY')}</p>     */}
+            <h1 className='teacher'>Matérias:</h1>
+            <div style={{ maxWidth: '600px', margin: 'auto' }}>
+              {materias.length > 0 ? (
+                <ul>
+                  {materias.map((materia, index) => (
+                    <li key={index}>{materia}</li>
+                  ))}
+                </ul>
+              ) : (
+                <div style={{ textAlign: 'center' }}>
+                  <p>Nenhuma matéria disponível</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className='players-video'>
-          <ClassPlayer />
+          <Sessoes />
         </div>
 
       </div>

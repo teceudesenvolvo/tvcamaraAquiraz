@@ -1,8 +1,8 @@
 import React from 'react';
-import '../App.css';
+import logoAquiraz from '../../src/assets/images/logoAquiraz.png'; // Importe a logo
 
 import ReactPlayer from 'react-player';
-import { clickButton, LoggedOut } from '../store/actions/index'
+import { clickButton, LoggedOut } from '../store/actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
@@ -14,11 +14,17 @@ class Liveatual extends React.Component {
     this.state = {
       tokenAccess: null,
       liveStreamId: null,
-      playlistVideoId: null
+      playlistVideoId: null,
+      videoTitle: 'TV Câmara de Pacatuba',
+      videoDescription: 'Acompanhe ao vivo as sessões e audiências públicas.',
+      videoThumbnailUrl: null,
+      isLive: false,
+      showIframe: false,
     };
+    this.handlePlayClick = this.handlePlayClick.bind(this);
   }
 
-  // Autenticação
+  // Métodos de autenticação e busca de streams - (sem alterações)
   getAccessToken = async () => {
     try {
       const response = await axios.post(
@@ -45,15 +51,38 @@ class Liveatual extends React.Component {
     // const PLAYLIST_ID = 'PLTrq6afnTQmGtNTPcf5fidnO6wF4ZtSgU';
 
     axios.get('').then(response => {
-      console.log(response); // Verificar os dados da resposta da API
+      console.log(response);
       const items = response.data.items;
-      const liveStreamItem = items.find(item => item.snippet.title.toLowerCase().includes('ao vivo'));
-      if (liveStreamItem) {
-        const liveStreamId = liveStreamItem.snippet.resourceId.videoId;
-        this.setState({ liveStreamId });
-      } else {
-        const latestVideoId = items.length > 0 ? items[0].snippet.resourceId.videoId : null;
-        this.setState({ playlistVideoId: latestVideoId });
+
+      // CORREÇÃO AQUI: Acessando o primeiro item do array
+      const videoItem = items.length > 0 ? items[0] : null;
+
+      if (videoItem) {
+        const thumbnailUrl = videoItem.snippet.thumbnails.maxres?.url || videoItem.snippet.thumbnails.high?.url;
+
+        const liveStreamItem = items.find(item => item.snippet.title.toLowerCase().includes('ao vivo'));
+
+        if (liveStreamItem) {
+          const liveStreamId = liveStreamItem.snippet.resourceId.videoId;
+          this.setState({
+            liveStreamId,
+            isLive: true,
+            showIframe: false,
+            videoTitle: liveStreamItem.snippet.title,
+            videoDescription: liveStreamItem.snippet.description,
+            videoThumbnailUrl: thumbnailUrl,
+          });
+        } else {
+          const latestVideoId = videoItem.snippet.resourceId.videoId;
+          this.setState({
+            playlistVideoId: latestVideoId,
+            isLive: false,
+            showIframe: false,
+            videoTitle: videoItem.snippet.title,
+            videoDescription: videoItem.snippet.description,
+            videoThumbnailUrl: thumbnailUrl,
+          });
+        }
       }
     }).catch(error => {
       console.error('Erro ao buscar itens da playlist:', error);
@@ -64,40 +93,72 @@ class Liveatual extends React.Component {
     this.getAccessToken();
   }
 
+  handlePlayClick() {
+    this.setState({ showIframe: true });
+  }
+
   render() {
-    const { liveStreamId, playlistVideoId } = this.state;
+    const { liveStreamId, playlistVideoId, videoTitle, videoThumbnailUrl, isLive, showIframe } = this.state;
+
+    if (!this.state) {
+      return null;
+    }
+
+    const videoUrl = liveStreamId
+      ? `https://www.youtube.com/watch?v=${liveStreamId}`
+      : playlistVideoId
+        ? `https://www.youtube.com/watch?v=${playlistVideoId}`
+        : null;
 
     return (
-      <div>
-        <section>
-          <div className="backgroundLaunch">
-            
-            <div className="curso-lancamento">
-              
-              <div className='videoLiveInicio'>
-                {liveStreamId ? (
-                  <ReactPlayer
-                    className="watchVideo"
-                    scrolling="no"
-                    frameborder="0"
-                    url={`https://www.youtube.com/watch?v=${liveStreamId}`}
-                    controls='true'
-                  />
-                ) : (
-                  playlistVideoId && (
-                    <ReactPlayer
-                      className="watchVideo"
-                      scrolling="no"
-                      frameborder="0"
-                      url={`https://www.youtube.com/watch?v=${playlistVideoId}`}
-                      controls='true'
-                    />
-                  )
-                )}
-              </div>
+      <div
+        className="hero-player-section"
+        style={{
+          backgroundImage: videoThumbnailUrl ? `url(${videoThumbnailUrl})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+
+        {videoUrl ? (
+          <>
+            <div className="video-player-container">
+              {showIframe && (
+                <ReactPlayer
+                  className="react-player"
+                  url={videoUrl}
+                  controls={true}
+                  width="100%"
+                  height="100%"
+                  playing={true}
+                />
+              )}
             </div>
+
+            {!showIframe && (
+              <>
+                <div className="video-overlay"></div>
+                <div className="logo-container">
+                  <img src={logoAquiraz} alt="Logo Câmara de Aquiraz" className="logo" />
+                </div>
+                <div className="player-content-info">
+                  <h1>{videoTitle}</h1>
+                  <button
+                    className="btn-player"
+                    onClick={this.handlePlayClick}
+                  >
+                    {isLive ? 'Assistir Ao Vivo' : 'Assistir Agora'}
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <div className="player-content-info" style={{ position: 'relative', transform: 'none', textAlign: 'center' }}>
+            <h1>Não há transmissão ao vivo no momento.</h1>
+            <p>Aguarde a próxima sessão ou confira o conteúdo mais recente na nossa playlist.</p>
           </div>
-        </section>
+        )}
       </div>
     );
   }

@@ -87,8 +87,6 @@ import axios from 'axios'
     <div>
         <section className="eventos">
           <div className="divTitleSection">
-            {/* <div className="item-separator"></div> */}
-            <h1 className="titleSection">Eventos</h1>
             <p className="newsSection">Todos os eventos da câmara</p>
           </div>
             <ul  className="listAreas2">

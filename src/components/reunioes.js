@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css'
 
 import {connect} from 'react-redux'
 import {clickButton, openAula, LoggedOut} from '../store/actions/index'
@@ -9,18 +8,6 @@ import axios from 'axios'
 
 
 // Icones
-
-  //mudança de páginas
-  // function list(){
-  //   window.location.href = "/listItems"
-  // }
-  // function inicio(){
-  //   window.location.href = "/inicio"
-  // }
-  // function itemClick(){
-  //   window.location.href = "/item"
-  //   console.log(this.state.id)
-  // }
 
   class Elas extends React.Component{
     
@@ -42,12 +29,11 @@ import axios from 'axios'
         
         let avisos = avisoAll.map(item => ({
           ...item,
-          id: item.etag // Using a unique identifier from the item itself, like etag, or another unique property.
+          id: item.etag
         }));
 
         avisos = avisos.filter(content => content.snippet.title.toUpperCase().includes('SOLENE'));
 
-        // Limita avisos a 4 itens
         if (avisos.length > 4) {
           avisos = avisos.slice(0, 4);
         }
@@ -64,7 +50,6 @@ import axios from 'axios'
   
   render(){
 
-    // Carregar Aulas
     const avisos = this.state.avisos 
   
     const listAvisos = avisos.map((aviso) => 
@@ -77,10 +62,10 @@ import axios from 'axios'
           })}
         }
         >
-              <img src={aviso.snippet.thumbnails.high.url} alt='thurmb'/>
+              <img src={aviso.snippet.thumbnails.high.url} alt='thumbnail'/>
+              {/* Adicione o overlay e o título dentro de uma div */}
+              <div className="overlay"></div>
               <p className='titleCard'> {aviso.snippet.title} </p>
-              {/* <p className='titleCard'> {aviso.etag} </p> */}
-              {/* <p className='txtCard'> {aviso.description} </p> */}
       </li>
     )
   
@@ -88,8 +73,6 @@ import axios from 'axios'
     <div>
         <section className="eventos">
           <div className="divTitleSection">
-            {/* <div className="item-separator"></div> */}
-            <h1 className="titleSection">Eventos</h1>
             <p className="newsSection">Eventos Recentes da Câmara</p>
           </div>
             <ul  className="listAreas2">
