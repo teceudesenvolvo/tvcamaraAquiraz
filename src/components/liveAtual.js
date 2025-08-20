@@ -115,8 +115,10 @@ class Liveatual extends React.Component {
         className="hero-player-section"
         style={{
           backgroundImage: videoThumbnailUrl ? `url(${videoThumbnailUrl})` : 'none',
-          backgroundSize: 'cover',
+          backgroundSize: '130%',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          objectFit: 'contain',
         }}
       >
 
