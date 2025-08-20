@@ -100,6 +100,7 @@ class Home extends Component {
         <LiveAtual />
 
         <div className='players-video-inicio'>
+          <p>Ultimas Sessoes</p>
           <Sessoes />
         </div>
 

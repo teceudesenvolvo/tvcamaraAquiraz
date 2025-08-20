@@ -1,6 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {openAula, LoggedOut} from '../store/actions/index';
+import { connect } from 'react-redux';
+import { openAula, LoggedOut } from '../store/actions/index';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 
@@ -10,8 +10,9 @@ class Avisos extends React.Component {
       super(props);
       this.state = {
         sessoes: [], 
-        carregar: 'Carregar Sessões',
-        btnLoad: "visitanteBtn"
+        currentPage: 1,
+        totalPages: 1,
+        isLoading: false,
       };
     }
 
@@ -47,44 +48,38 @@ class Avisos extends React.Component {
 
     // Método para carregar as sessões da API do SAPL
     loadSessoes = async () => {
+      this.setState({ isLoading: true });
       try {
-        // Passo 1: Fazer a requisição inicial para obter o número total de páginas
+        // Fazer a requisição inicial para obter o número total de páginas
         const resInitial = await axios.get(`https://sapl.aquiraz.ce.leg.br/api/sessao-plenaria/`);
         const totalPages = resInitial.data.pagination.total_pages;
 
-        let sessoesAll = [];
+        let sessoesFromPage = [];
         if (totalPages > 0) {
-            // Passo 2: Fazer a requisição para a última página e, se houver, a penúltima
-            const pagesToFetch = [];
-            pagesToFetch.push(totalPages);
-            if (totalPages > 1) {
-                pagesToFetch.push(totalPages - 1);
-            }
+            // Carrega a última página
+            const pageOne = totalPages;
+            const resSaplOne = await axios.get(`https://sapl.aquiraz.ce.leg.br/api/sessao-plenaria/?page=${pageOne}`);
+            sessoesFromPage = resSaplOne.data.results || [];
             
-            // Faz requisições para cada uma das últimas páginas, começando pela última
-            // Não é necessário usar o sort, basta fazer o loop de forma decrescente
-            for (let i = pagesToFetch.length - 1; i >= 0; i--) {
-                const page = pagesToFetch[i];
-                const resSapl = await axios.get(`https://sapl.aquiraz.ce.leg.br/api/sessao-plenaria/?page=${page}`);
-                sessoesAll = sessoesAll.concat(resSapl.data.results || []);
-                console.log(sessoesAll);
+            // Se houver mais de uma página, carrega a penúltima e a concatena
+            if (totalPages > 1) {
+                const pageTwo = totalPages - 1;
+                const resSaplTwo = await axios.get(`https://sapl.aquiraz.ce.leg.br/api/sessao-plenaria/?page=${pageTwo}`);
+                // Adiciona as sessões da penúltima página ao final do array
+                sessoesFromPage = [...sessoesFromPage, ...(resSaplTwo.data.results || [])];
             }
         }
-
-        // Mapeia os dados da API do SAPL e constrói a URL da thumbnail
-        const sessoes = sessoesAll.map(sessao => {
+        
+        // Mapeia os dados da API do SAPL
+        const sessoes = sessoesFromPage.map(sessao => {
           const videoInfo = this.getVideoInfo(sessao.idYoutube);
           let thumbnailUrl = '';
           
-          // Define a URL da thumbnail com base na plataforma do vídeo
           if (videoInfo.type === 'youtube' && videoInfo.id) {
             thumbnailUrl = `https://img.youtube.com/vi/${videoInfo.id}/hqdefault.jpg`;
           } else if (videoInfo.type === 'facebook' && videoInfo.id) {
-            // Não é possível obter uma thumbnail pública do Facebook sem uma API Key.
-            // Usamos uma imagem de placeholder com um ícone de vídeo do Facebook.
             thumbnailUrl = 'https://placehold.co/600x400/3b5998/ffffff?text=Vídeo+no+Facebook';
           } else {
-            // Se a URL não for reconhecida, usa um placeholder genérico
             thumbnailUrl = 'https://placehold.co/600x400/CCCCCC/000000?text=Sessão+Plenária';
           }
 
@@ -94,26 +89,69 @@ class Avisos extends React.Component {
             thumbnailUrl: thumbnailUrl,
             idYoutube: sessao.idYoutube,
           };
-        }).filter(sessao => sessao.idYoutube); // Filtra sessões com idYoutube vazio
+        }).filter(sessao => sessao.idYoutube);
         
-        // Inverte a ordem do array para que os itens mais recentes fiquem no topo
-        const ultimasSessoes = sessoes.slice(0, 12).reverse();
-        
-        this.setState({ sessoes: ultimasSessoes });
+        // A API já retorna os itens da página em ordem crescente. Para que as sessões mais recentes fiquem no topo da lista, a ordenação é feita aqui.
+        const sortedSessoes = sessoes.sort((a, b) => b.codReuniao - a.codReuniao);
+
+        this.setState({ 
+          sessoes: sortedSessoes,
+          totalPages: totalPages,
+          currentPage: totalPages > 1 ? totalPages - 1 : totalPages,
+          isLoading: false
+        });
 
       } catch (err) {
         console.error("Erro ao carregar sessões:", err);
-        // Em caso de falha, defina um estado vazio para evitar renderização incorreta
-        this.setState({ sessoes: [] });
+        this.setState({ sessoes: [], isLoading: false });
       }
     }
+
+    // Função para carregar mais sessões
+    loadMoreSessoes = async () => {
+        const { currentPage, sessoes } = this.state;
+        if (currentPage > 1) {
+            this.setState({ isLoading: true });
+            try {
+                const resSapl = await axios.get(`https://sapl.aquiraz.ce.leg.br/api/sessao-plenaria/?page=${currentPage - 1}`);
+                const sessoesFromPage = resSapl.data.results || [];
+                const newSessoes = sessoesFromPage.map(sessao => {
+                    const videoInfo = this.getVideoInfo(sessao.idYoutube);
+                    let thumbnailUrl = '';
+                    if (videoInfo.type === 'youtube' && videoInfo.id) {
+                        thumbnailUrl = `https://img.youtube.com/vi/${videoInfo.id}/hqdefault.jpg`;
+                    } else if (videoInfo.type === 'facebook' && videoInfo.id) {
+                        thumbnailUrl = 'https://placehold.co/600x400/3b5998/ffffff?text=Vídeo+no+Facebook';
+                    } else {
+                        thumbnailUrl = 'https://placehold.co/600x400/CCCCCC/000000?text=Sessão+Plenária';
+                    }
+                    return {
+                        codReuniao: sessao.codReuniao,
+                        titulo: sessao.txtTituloReuniao || 'Sessão Plenária',
+                        thumbnailUrl: thumbnailUrl,
+                        idYoutube: sessao.idYoutube,
+                    };
+                }).filter(sessao => sessao.idYoutube);
+
+                this.setState(prevState => ({
+                    // Adiciona as novas sessões ao final da lista, mantendo a ordem inversa
+                    sessoes: [...prevState.sessoes, ...newSessoes.reverse()],
+                    currentPage: prevState.currentPage - 1,
+                    isLoading: false
+                }));
+            } catch (err) {
+                console.error("Erro ao carregar mais sessões:", err);
+                this.setState({ isLoading: false });
+            }
+        }
+    };
 
     componentDidMount() {
       this.loadSessoes();
     }
   
     render() {
-      const sessoes = this.state.sessoes; 
+      const { sessoes, currentPage, totalPages, isLoading } = this.state; 
       
       const listSessoes = sessoes.map((sessao) => 
           <li className="Areas type1" key={sessao.codReuniao}
@@ -142,6 +180,26 @@ class Avisos extends React.Component {
             <ul  className="listAreas2">
               {listSessoes}
             </ul>
+            {currentPage > 1 && (
+                <div style={{ textAlign: 'center', margin: '20px' }}>
+                    <button
+                        onClick={this.loadMoreSessoes}
+                        disabled={isLoading}
+                        style={{
+                            padding: '10px 20px',
+                            fontSize: '16px',
+                            cursor: 'pointer',
+                            backgroundColor: '#007bff',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '5px',
+                            opacity: isLoading ? 0.6 : 1,
+                        }}
+                    >
+                        {isLoading ? 'Carregando...' : 'Carregar mais'}
+                    </button>
+                </div>
+            )}
           </section>
         </div>
       );

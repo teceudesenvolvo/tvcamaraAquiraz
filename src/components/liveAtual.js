@@ -142,7 +142,7 @@ class Liveatual extends React.Component {
                   <img src={logoAquiraz} alt="Logo Câmara de Aquiraz" className="logo" />
                 </div>
                 <div className="player-content-info">
-                  <p>Bem vindo a TV Câmara de Aquiraz</p>
+                  <p>Bem-vindo a TV Câmara de Aquiraz</p>
                   <h1>{videoTitle}</h1>
                   <button
                     className="btn-player"

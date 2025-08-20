@@ -482,7 +482,7 @@ body>iframe {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 125%;
   height: 80%;
   /* Altura do banner de destaque */
   background-color: #121212;
@@ -491,8 +491,8 @@ body>iframe {
   border-radius: 10px;
   margin-left: -20px;
   top: 15px;
+  object-fit: contain;
 }
-
 /* Área do player de vídeo */
 .video-player-container {
   position: relative;
@@ -1126,6 +1126,14 @@ body>iframe {
     margin-top: 100px !important;
     margin-left: 20% !important;
   }
+}
+
+.players-video-inicio > p{
+  text-align: left;
+  margin-top: 80px;
+  margin-bottom: -100px ;
+  font-size: 15px;
+  margin-left: 8.5%;
 }
 
 .video-play {
