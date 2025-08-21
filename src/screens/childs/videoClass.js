@@ -81,42 +81,67 @@ class Gestao extends Component {
     return (
       <div className="App">
         <MainMenu />
-        <div className='box-video-aula' style={{ width: '80%', margin: '0 auto' }}>
-          <div className='video-play'>
-            <ReactPlayer 
-              className="playVideoWatch" 
-              scrolling="no" 
-              frameBorder="0" 
-              onLoad="iFrameResize()"
-              url={this.state.uriVideo} 
-              controls={true}
-              width="100%"
-              height="100%"
-            />
-          </div>
-          <div className='desc-video' >
-            <h1>{this.state.title}</h1>
-            <p>{this.state.description}</p>
-            <h1 className='teacher'>Matérias:</h1>
-            <div style={{ maxWidth: '600px', margin: 'auto' }}>
-              {materias.length > 0 ? (
-                <ul>
-                  {materias.map((materia, index) => (
-                    <li key={index}>{materia}</li>
-                  ))}
-                </ul>
-              ) : (
-                <div style={{ textAlign: 'center' }}>
-                  <p>Nenhuma matéria disponível</p>
-                </div>
-              )}
+        <div 
+          className='main-container'
+          style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '20px', 
+            width: '80%', 
+            margin: '10% auto 20px auto', 
+            padding: '20px',
+            backgroundColor: 'rgb(210, 210, 210)', // Adicionado para visualização
+            borderRadius: '10px',
+          }}
+        >
+          {/* Contêiner do vídeo e descrição */}
+          <div 
+            style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '20px',
+              backgroundColor: '#c4c4c4',
+              padding: '10px',
+              borderRadius: '10px',
+            }}
+          >
+            <div className='video-play'>
+              <ReactPlayer 
+                className="playVideoWatch" 
+                scrolling="no" 
+                frameBorder="0" 
+                onLoad="iFrameResize()"
+                url={this.state.uriVideo} 
+                controls={true}
+                width="100%"
+                height="100%"
+              />
+            </div>
+            <div className='desc-video'>
+              <h1>{this.state.title}</h1>
+              <p>{this.state.tipo}</p>
+              <h1 className='teacher'>Matérias:</h1>
+              <div >
+                {materias.length > 0 ? (
+                  <ul>
+                    {materias.map((materia, index) => (
+                      <li key={index}>{materia}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div style={{ textAlign: 'center' }}>
+                    <p>Nenhuma matéria disponível</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+          
+          {/* Contêiner das sessões */}
+          <div>
+            <Sessoes />
+          </div>
         </div>
-        <div className='players-video'>
-          <Sessoes />
-        </div>
-
       </div>
     )
   }
