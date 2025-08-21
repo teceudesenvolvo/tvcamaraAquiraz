@@ -12,6 +12,7 @@ import axios from 'axios'
 // Components
 import Sessoes from '../components/sections'
 import LiveAtual from '../components/liveAtual'
+import PenultimaSessao from '../components/launch';
 // import Reunioes from '../components/reunioes'
 
 
@@ -104,7 +105,7 @@ class Home extends Component {
           <Sessoes />
         </div>
 
-        {/* <Event /> */}
+        <PenultimaSessao />
 
         {/* <Reunioes /> */}
 
